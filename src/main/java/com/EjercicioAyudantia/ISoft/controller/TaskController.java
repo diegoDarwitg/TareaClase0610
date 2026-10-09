@@ -1,5 +1,6 @@
 package com.EjercicioAyudantia.ISoft.controller;
 
+import com.EjercicioAyudantia.ISoft.dto.TaskRequest;
 import com.EjercicioAyudantia.ISoft.model.Task;
 import com.EjercicioAyudantia.ISoft.service.TaskService;
 
@@ -16,4 +17,9 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Task createTask(@RequestBody TaskRequest request) {
+        return taskService.createTask(request);
+    }
 }
