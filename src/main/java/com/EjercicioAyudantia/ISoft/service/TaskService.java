@@ -5,14 +5,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class TaskService {
+    private final List<Task> tareas = new ArrayList<>();
+    private final AtomicLong contador = new AtomicLong(1);
 
-    private final List<Task> tasks = new ArrayList<>();
-    private Long nextId = 1L;
-
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Task> listar(String prioridad, String titulo, String fechaLimite) {
+        return tareas.stream()
+                .filter(t -> prioridad == null || t.getPrioridad().equalsIgnoreCase(prioridad))
+                .filter(t -> titulo == null || t.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+                .filter(t -> fechaLimite == null || fechaLimite.equals(t.getFechaLimite()))
+                .toList();
     }
 }
